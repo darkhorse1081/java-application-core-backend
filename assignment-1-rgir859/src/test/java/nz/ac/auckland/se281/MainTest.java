@@ -12,9 +12,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
   MainTest.Task1.class,
-  MainTest.Task2.class, // Uncomment this line when to start Task 2
-  MainTest.Task3.class, // Uncomment this line when to start Task 3
-  MainTest.YourTests.class, // Uncomment this line to run your own tests
+  // MainTest.Task2.class, // Uncomment this line when to start Task 2
+  // MainTest.Task3.class, // Uncomment this line when to start Task 3
+  // MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
   public static class Task1 extends CliTest {
