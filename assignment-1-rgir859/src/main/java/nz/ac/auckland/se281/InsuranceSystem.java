@@ -32,39 +32,42 @@ public class InsuranceSystem {
     if (userDataBase.isEmpty()) {
       MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"s",".");
     } else if (userDataBase.size() == 1) {
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"",":");
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"",":");
+        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(userDataBase.size()),
+          nameVerification.get(0), userDataBase.get(0).get(1));
     } else {
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"s",":");
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"s",":");
       for (int i = 0; i < userDataBase.size(); i++) {
-        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(i),
+        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(i+1),
         nameVerification.get(i), userDataBase.get(i).get(1));
       }
-      }
     }
+  }
 
   public void createNewProfile(String userName, String age) {
 
-    if (userName.length()>3) { 
+    if (userName.length()<3) { 
       MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName); // username incorrect length
       
-    } else if (nameVerification.contains(userName.substring(0, 1).toUpperCase() + 
+    } else if (nameVerification.contains
+              (userName.substring(0, 1).toUpperCase() + 
                userName.substring(1).toLowerCase())) {
-      MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName); // username is present in database
+              MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName); // username is present in database
 
     } else if (isNumber(age) == false){       // age input is not a postive integer
-      MessageCli.INVALID_AGE.printMessage(age);
-    }
-    else {
-      if (Integer.parseInt(age)<=0) { // if age is negative 
         MessageCli.INVALID_AGE.printMessage(age);
-      } else {
-            String updatedName = userName.substring(0, 1).toUpperCase() + 
-            userName.substring(1).toLowerCase();
-            UserProfile newEntry = new UserProfile(updatedName, age);
-            userDataBase.add(newEntry.setPair());
-            nameVerification.add(newEntry.getFirstName());
-          }
+    }
+      else {
+        if (Integer.parseInt(age)<=0) { // if age is negative 
+          MessageCli.INVALID_AGE.printMessage(age);
 
+        } else {
+              UserProfile newEntry = new UserProfile(userName, age);
+              userDataBase.add(newEntry.setPair());
+              nameVerification.add(newEntry.getFirstName());
+              MessageCli.PROFILE_CREATED.printMessage(newEntry.getFirstName(), 
+              newEntry.getAge());
+            }
     }
 
   }
