@@ -1,21 +1,32 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class UserProfile {
      
-  private String firstName = "";
+  private String userName = "";
   private String age = "";
+  private ArrayList<String> valuePair;
 
-  public UserProfile(String firstName, String age){
-    this.firstName = firstName;
+  public UserProfile(String userName, String age){
+    this.userName = userName;
     this.age = age;
+    this.valuePair = new ArrayList<String>();
   }
 
   public String getFirstName() {
-    return this.firstName;
+    return this.userName;
 	}
 
   public String getAge() {
     return this.age;
+  }
+
+  public ArrayList<String> setPair() {
+    valuePair.add(userName);
+    valuePair.add(age);
+    return valuePair;
+
   }
 
 
