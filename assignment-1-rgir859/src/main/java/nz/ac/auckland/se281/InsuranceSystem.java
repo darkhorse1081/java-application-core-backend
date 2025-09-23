@@ -50,7 +50,7 @@ public class InsuranceSystem {
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"s",":");
         for (int i = 0; i < userDataBase.size(); i++) {
           if (userDataBase.get(i).getProfileLoaded() == true) {
-            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("***",
+            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ",
               String.valueOf(i+1),nameVerification.get(i),userDataBase.get(i).getAge());
           } else {
               MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(i+1),
