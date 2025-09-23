@@ -49,7 +49,7 @@ public class InsuranceSystem {
     } else {
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"s",":");
         for (int i = 0; i < userDataBase.size(); i++) {
-          if (userDataBase.get(i).getProfileLoaded()) {
+          if (userDataBase.get(i).getProfileLoaded() == true) {
             MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("***",
               String.valueOf(i+1),nameVerification.get(i),userDataBase.get(i).getAge());
           } else {
@@ -63,7 +63,7 @@ public class InsuranceSystem {
 
   public void createNewProfile(String userName, String age) {
 
-    if (isProfileLoaded) {
+    if (isProfileLoaded == true) {
       MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(nameVerification.get(loadPosition));
     }
     if (userName.length()<3) { 
@@ -92,10 +92,10 @@ public class InsuranceSystem {
 
     String proccessed = convertCap(userName);
     if (userName.length()<3) { 
-      MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(proccessed); // username incorrect length
+        MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(proccessed); // username incorrect length
     } 
     if (nameVerification.contains(proccessed)) {
-      if (isProfileLoaded == false) { 
+      if (isProfileLoaded == false) { // loading valid profile when nothing is loaded
          isProfileLoaded = true;
          loadPosition = nameVerification.indexOf(proccessed);
          userDataBase.get(loadPosition).setProfileLoaded(true);
@@ -104,13 +104,12 @@ public class InsuranceSystem {
       } else if (isProfileLoaded == true) { 
          userDataBase.get(loadPosition).setProfileLoaded(false); // case -> p1 already loaded -> p2 loaded 
          //-> what happens to loadt status of p1 instance
-         loadPosition = nameVerification.indexOf(proccessed);
+         loadPosition = nameVerification.indexOf(proccessed); // updated load index position
          userDataBase.get(loadPosition).setProfileLoaded(true);
          MessageCli.PROFILE_LOADED.printMessage(proccessed); 
-      }
-
+      } 
     } else {
-         MessageCli.NO_PROFILE_FOUND_TO_LOAD.printMessage(proccessed);
+        MessageCli.NO_PROFILE_FOUND_TO_LOAD.printMessage(proccessed);
     }
 
   }
@@ -118,16 +117,41 @@ public class InsuranceSystem {
   public void unloadProfile() {
 
     if (isProfileLoaded == true) { 
-      isProfileLoaded = false;
-      userDataBase.get(loadPosition).setProfileLoaded(false);
-      MessageCli.PROFILE_UNLOADED.printMessage(userDataBase.get(loadPosition).getFirstName());
+        isProfileLoaded = false;
+        userDataBase.get(loadPosition).setProfileLoaded(false);
+        MessageCli.PROFILE_UNLOADED.printMessage(userDataBase.get(loadPosition).getFirstName());
     } else {
-      MessageCli.NO_PROFILE_LOADED.printMessage();
+        MessageCli.NO_PROFILE_LOADED.printMessage();
     }
   }
 
   public void deleteProfile(String userName) {
-    // TODO: Complete this method.
+
+    if (convertCap(userName).length()<3) { 
+      MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(convertCap(userName));
+    } else {
+        if (nameVerification.contains(convertCap(userName))) {
+           int x = nameVerification.indexOf(convertCap(userName));
+           if ((x == loadPosition) && (isProfileLoaded == true)) { // current profile loaded is being deleted error
+                MessageCli.CANNOT_DELETE_PROFILE_WHILE_LOADED.printMessage(convertCap(userName));
+           } else {
+                nameVerification.remove(x); // nothing is loaded by default
+                userDataBase.remove(x); // -> shift indexing of name amd userdatabase 
+                // what happens to isProfileLoaded + loadPosition -> [reset]
+                // new load position AFTER deletion
+                if (isProfileLoaded == true) { // position shift of loaded if non loaded is deleted
+                    for (int i = 0; i < userDataBase.size(); i++) {
+                      if (userDataBase.get(i).getProfileLoaded() == true) {
+                          loadPosition = i;
+                    }
+                  }
+                }
+                MessageCli.PROFILE_DELETED.printMessage(convertCap(userName));
+           }
+        } else {
+           MessageCli.NO_PROFILE_FOUND_TO_DELETE.printMessage(convertCap(userName));
+        }
+    }
   }
 
   public void createPolicy(PolicyType type, String[] options) {
