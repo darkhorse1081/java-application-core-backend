@@ -3,6 +3,9 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 
 import nz.ac.auckland.se281.Main.PolicyType;
+import nz.ac.auckland.se281.insurance_policies.CarPolicy;
+import nz.ac.auckland.se281.insurance_policies.HomePolicy;
+import nz.ac.auckland.se281.insurance_policies.LifePolicy;
 
 public class InsuranceSystem {
 
@@ -10,13 +13,14 @@ public class InsuranceSystem {
   private ArrayList<UserProfile> userDataBase;
   private ArrayList<String> nameVerification;
   private boolean isProfileLoaded;
-  private int loadPosition = 0;
+  private int loadPosition;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
      this.userDataBase = new ArrayList<UserProfile>();
      this.nameVerification = new ArrayList<String>();
      this.isProfileLoaded = false;
+     this.loadPosition = 0;
   }
 
   public boolean isNumber(String input) {
@@ -32,7 +36,7 @@ public class InsuranceSystem {
 
   public String convertCap(String userName) {
     String converted = userName.substring(0, 1).toUpperCase() + 
-         userName.substring(1).toLowerCase();
+    userName.substring(1).toLowerCase();
     return converted;
   }
 
@@ -44,21 +48,21 @@ public class InsuranceSystem {
     } else if (userDataBase.size() == 1) {
       MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"",":");
       if (isProfileLoaded == true) {
-          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ",
+          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ", // --
           String.valueOf(userDataBase.size()),nameVerification.get(0),userDataBase.get(0).getAge());
       } else {
-          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(userDataBase.size()),
+          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(userDataBase.size()), // --
           nameVerification.get(0), userDataBase.get(0).getAge());
       }
     } else {
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(String.valueOf(userDataBase.size()),"s",":");
         for (int i = 0; i < userDataBase.size(); i++) {
           if (userDataBase.get(i).getProfileLoaded() == true) {
-            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ",
+            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage("*** ", // --
               String.valueOf(i+1),nameVerification.get(i),userDataBase.get(i).getAge());
           } else {
               MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(String.valueOf(i+1),
-              nameVerification.get(i), userDataBase.get(i).getAge());            
+              nameVerification.get(i), userDataBase.get(i).getAge()); // --    
           }
 
         }
@@ -157,6 +161,36 @@ public class InsuranceSystem {
 
   public void createPolicy(PolicyType type, String[] options) {
     // TODO: Complete this method.
-  }
 
+    if (isProfileLoaded == false) { // interact first then no prof loaded
+      MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
+
+    } else { // for the currently loaded profile
+        if (type == Main.PolicyType.HOME) {
+          HomePolicy homePolicy = new HomePolicy(options[0], options[1], options[2]);
+          userDataBase.get(loadPosition).addPolicyObject(homePolicy);
+          MessageCli.NEW_POLICY_CREATED.printMessage("home",nameVerification.get(loadPosition));
+
+        } else if (type == Main.PolicyType.CAR) {
+          CarPolicy carPolicy = new CarPolicy(options[0], options[1], options[2], options[3]);
+          userDataBase.get(loadPosition).addPolicyObject(carPolicy);
+          MessageCli.NEW_POLICY_CREATED.printMessage("car", nameVerification.get(loadPosition));
+          
+        } else {
+            if (Integer.parseInt(userDataBase.get(loadPosition).getAge()) < 100) {
+              if (!userDataBase.get(loadPosition).containsInstance()) { // -- does not contain life policy then add
+                LifePolicy lifePolicy = new LifePolicy(options[0]);
+                userDataBase.get(loadPosition).addPolicyObject(lifePolicy);
+                MessageCli.NEW_POLICY_CREATED.printMessage("life", nameVerification.get(loadPosition));
+              } else {
+                MessageCli.ALREADY_HAS_LIFE_POLICY.printMessage(userDataBase.get(loadPosition).getFirstName());
+              }
+            } else { // > 100
+              MessageCli.OVER_AGE_LIMIT_LIFE_POLICY.printMessage(nameVerification.get(loadPosition));
+
+
+            }
+        }
+    }
+  }
 }
