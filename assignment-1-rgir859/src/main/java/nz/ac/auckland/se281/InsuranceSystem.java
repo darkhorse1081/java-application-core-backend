@@ -14,7 +14,7 @@ public class InsuranceSystem {
   private ArrayList<UserProfile> userDataBase;
   private ArrayList<String> nameVerification;
   private boolean isProfileLoaded;
-  private int loadPosition;
+  private int loadPosition; 
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
