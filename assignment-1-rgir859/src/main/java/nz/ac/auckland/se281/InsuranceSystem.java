@@ -101,24 +101,21 @@ public class InsuranceSystem {
       MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(nameVerification.get(loadPosition));
     } else {
         if (userName.length()<3) { 
-          MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName); // username incorrect length
+          MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(convertCap(userName)); // username incorrect length
         } else if (nameVerification.contains(convertCap(userName))) {
             MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(convertCap(userName)); // username is present in database
-        } else if (!isNumber(age)){ // age input is not a postive integer
-            MessageCli.INVALID_AGE.printMessage(age);
+        } else if (!isNumber(age) || Integer.parseInt(age)<=0){ // age input is not a postive integer
+            MessageCli.INVALID_AGE.printMessage(age,convertCap(userName));
         } else {
-            if (Integer.parseInt(age)<=0) { // if age is negative 
-              MessageCli.INVALID_AGE.printMessage(age);
-            } else {
-                  UserProfile newEntry = new UserProfile(userName, age);
-                  userDataBase.add(newEntry);
-                  nameVerification.add(newEntry.getFirstName());
-                  MessageCli.PROFILE_CREATED.printMessage(newEntry.getFirstName(), 
-                  newEntry.getAge());
-                }
-              }
-            } 
-  }
+            UserProfile newEntry = new UserProfile(userName, age);
+            userDataBase.add(newEntry);
+            nameVerification.add(newEntry.getFirstName());
+            MessageCli.PROFILE_CREATED.printMessage(newEntry.getFirstName(), 
+            newEntry.getAge());
+            }
+        }
+  } 
+  
 
   public void loadProfile(String userName) {
 
