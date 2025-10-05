@@ -3,29 +3,32 @@ package nz.ac.auckland.se281.insurance_policies;
 public class HomePolicy extends InsurancePolicies {
 
   private String address;
-  private boolean isRented;
+  private boolean rentStatus;
 
   public HomePolicy(String sumInsured, String address, String isRented) {
     super(sumInsured);
     this.address = address;
-    this.setIsRented(isRented);
-    
+    setIsRented(isRented);
   }
 
-  public boolean setIsRented(String isRented) {
-    if (isRented == "yes") { 
-      return this.isRented = true;
+  public void setIsRented(String isRented) {
+    if (isRented != null && isRented.equalsIgnoreCase("yes")) { 
+      this.rentStatus = true;
     } else {
-      return this.isRented = false;
+      this.rentStatus = false;
     }
   }
 
+  public String getAddress() {
+    return this.address;
+  }
+
   @Override
-  public int basePremium(int clientAge) {
-    if (isRented == true) {
-      return (sumInsured * 2)/100;
+  public double basePremium(int clientAge) {
+    if (this.rentStatus) {
+      return sumInsured*0.02;
     } else {
-      return (sumInsured * 1)/100;
+      return sumInsured*0.01;
     }
   }
 }

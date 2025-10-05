@@ -4,7 +4,7 @@ public class CarPolicy extends InsurancePolicies {
 
   private String makeModel;
   private String licensePlate;
-  private boolean mechanicalBreakdown;
+  private boolean breakDownStatus;
 
   public CarPolicy(String sumInsured, String makeModel, String licensePlate, String mechanicalBreakdown) {
     super(sumInsured);
@@ -15,28 +15,32 @@ public class CarPolicy extends InsurancePolicies {
   }
 
   public boolean setMechanicalBreakdown(String mechanicalBreakdown) {
-    if (mechanicalBreakdown == "yes") { 
-      return this.mechanicalBreakdown = true;
+    if (mechanicalBreakdown != null && mechanicalBreakdown.equalsIgnoreCase("yes")) { 
+      return this.breakDownStatus = true;
     } else {
-      return this.mechanicalBreakdown = false;
+      return this.breakDownStatus = false;
     }
   }
 
+  public String getMakeModel() {
+    return this.makeModel;
+  }
+
   @Override
-  public int basePremium(int clientAge) {
+  public double basePremium(int clientAge) {
 
     if (clientAge < 25) {
-      if (mechanicalBreakdown) {
-        return (sumInsured*15)/100 + 80;
+      if (breakDownStatus) {
+        return sumInsured*0.15 + 80;
       } else {
-        return (sumInsured*15)/100;
+        return sumInsured*0.15;
       }
 
     } else {
-      if (mechanicalBreakdown) {
-        return (sumInsured*10)/100 + 80;
+      if (breakDownStatus) {
+        return sumInsured*0.1 + 80;
       } else {
-        return (sumInsured*10)/100;
+        return sumInsured*0.1;
       }
     }
 

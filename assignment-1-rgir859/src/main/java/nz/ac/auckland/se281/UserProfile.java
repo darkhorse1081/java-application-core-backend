@@ -53,4 +53,32 @@ public class UserProfile {
     return false;
   }
 
+  public String discountedPrice() {
+
+    double discountedValue = 0;
+
+    if (policyArrayList.size()==2) {
+      discountedValue = policyArrayList.get(0).basePremium(Integer.parseInt(this.age)) 
+      +policyArrayList.get(1).basePremium(Integer.parseInt(this.age));
+      discountedValue = discountedValue * 0.9;
+      return String.valueOf((int)discountedValue);
+
+    } else if (policyArrayList.size()>=3) {
+      for (InsurancePolicies insurancePolicies : policyArrayList) {
+        discountedValue = discountedValue + insurancePolicies.basePremium(Integer.parseInt(this.age));
+      }
+      discountedValue = discountedValue*0.8;
+      return String.valueOf((int)discountedValue);
+
+    } else if(policyArrayList.size()==1) {
+      discountedValue = policyArrayList.get(0).basePremium(Integer.parseInt(this.age));
+      return String.valueOf((int)discountedValue);
+
+    } else {
+      return String.valueOf((int)discountedValue);
+    }
+  }
+
+
+
 }

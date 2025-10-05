@@ -8,8 +8,8 @@ public class LifePolicy extends InsurancePolicies {
   }
 
   @Override
-  public int basePremium(int clientAge) {
-      return (sumInsured*(1 + clientAge/100))/100;
+  public double basePremium(int clientAge) {
+      return sumInsured*((1 + (double)clientAge/100)/100);
   }
 
 }
