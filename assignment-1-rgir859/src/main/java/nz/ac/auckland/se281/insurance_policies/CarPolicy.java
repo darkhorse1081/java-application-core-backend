@@ -26,6 +26,10 @@ public class CarPolicy extends InsurancePolicies {
     return this.makeModel;
   }
 
+  public String getlicensePlate() {
+    return this.licensePlate;
+  }
+
   @Override
   public double basePremium(int clientAge) {
 
