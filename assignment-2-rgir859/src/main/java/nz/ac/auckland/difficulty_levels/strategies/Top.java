@@ -1,3 +1,6 @@
 package nz.ac.auckland.difficulty_levels.strategies;
 
-public class Top {}
+public class Top implements Strategy{
+
+  
+}

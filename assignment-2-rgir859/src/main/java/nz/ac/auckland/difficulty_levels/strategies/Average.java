@@ -1,3 +1,6 @@
 package nz.ac.auckland.difficulty_levels.strategies;
 
-public class Average {}
+public class Average implements Strategy{
+
+  
+}

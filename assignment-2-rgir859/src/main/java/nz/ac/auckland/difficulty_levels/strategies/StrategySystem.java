@@ -1,3 +1,7 @@
 package nz.ac.auckland.difficulty_levels.strategies;
 
-public class StrategySystem {}
+public class StrategySystem {
+
+  private Strategy strategy;
+  
+}
