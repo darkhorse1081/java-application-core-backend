@@ -11,7 +11,7 @@ public class Medium implements JarvisDifficulty{
   private StrategySystem system;
   private ArrayList<Integer> playerHandInfo;
   private Integer roundNumber;
-  private Boolean implementFlag = false;
+
 
   public Medium() {           // constructor for medium difficulty
       this.roundNumber = 0;
@@ -37,7 +37,7 @@ public class Medium implements JarvisDifficulty{
     
     this.roundNumber = roundNumber;
     this.playerHandInfo = playerHandInfo;
-    this.implementFlag = true;
+
   }
 
   public StrategySystem useSystem() {

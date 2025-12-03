@@ -15,12 +15,6 @@ public class StrategySystem {
 
   public void setTransferredValue(){
 
-    // if (strategy instanceof RandomStrategy) {
-    //   this.obtainedFinger = strategy.returnFingers();
-    //   this.obtainedSum = strategy.returnSum();
-
-    // }
-
     this.obtainedFinger = strategy.returnFingers();
     this.obtainedSum = strategy.returnSum();
 
