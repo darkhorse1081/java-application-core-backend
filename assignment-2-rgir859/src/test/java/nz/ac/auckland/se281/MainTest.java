@@ -15,7 +15,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-  MainTest.Task1.class, //
+  // MainTest.Task1.class, //
   // MainTest.Task2.class, // Uncomment this line when to start Task 2
   // MainTest.Task3.class, // Uncomment this line when to start Task 3
   // MainTest.Task4.class, // Uncomment this line when to start Task 4

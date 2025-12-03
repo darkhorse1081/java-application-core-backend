@@ -1,24 +1,21 @@
 package nz.ac.auckland.difficulty_levels;
 
+import nz.ac.auckland.se281.Main.Difficulty;
+
 public class DifficultyFactory {
 
-//     public static Difficulty selectDifficulty(Difficulty difficulty){
+    public static JarvisDifficulty selectDifficulty(Difficulty difficulty){
       
-//         switch(){
+        switch(difficulty){
 
-//               case "Easy":
-//                   return new Easy();
-                  
-//               case "Medium":
-//                   return new Medium();
+              case EASY:
+                  return new Easy();
+            
+              case MEDIUM:
+                  return new Medium();
+        } 
 
-//               case "Hard":
-//                   return new Hard();
+        return null;     
+    }
 
-//               case "Master":
-//                   return new Master();
-
-//         }       
-
-//   }
 }

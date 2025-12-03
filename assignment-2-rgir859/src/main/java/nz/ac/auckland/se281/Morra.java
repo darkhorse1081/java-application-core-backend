@@ -1,13 +1,17 @@
 package nz.ac.auckland.se281;
 
-import nz.ac.auckland.difficulty_levels.DifficultyFactory;
-import nz.ac.auckland.difficulty_levels.strategies.Strategy;
+import java.util.ArrayList;
+
+import nz.ac.auckland.Jarvis;
 import nz.ac.auckland.se281.Main.Difficulty;
 
 public class Morra {
 
   private int round;
   private String globalPlayerName;
+  private Difficulty difficulty;
+  private Jarvis robot;
+
 
   public Morra() {
     this.round = 1;
@@ -18,6 +22,9 @@ public class Morra {
     // input check already implemented
     MessageCli.WELCOME_PLAYER.printMessage(options[0]);
     this.globalPlayerName = options[0];
+    this.difficulty = difficulty;
+
+    this.robot = new Jarvis(difficulty);
 
   }
 
@@ -42,8 +49,21 @@ public class Morra {
         sum = parts[1]; 
       }
 
-      MessageCli.PRINT_INFO_HAND.printMessage(globalPlayerName, fingers, sum);
+      robot.transferDetails(round, Integer.parseInt(fingers));         // passing on player hand and round info details
+      robot.implementProcess();
+      MessageCli.PRINT_INFO_HAND.printMessage(globalPlayerName, fingers, sum); 
+      int botFinger = robot.getConsoleFingers();
+      int botSum = robot.getConsoleSum();
+      MessageCli.PRINT_INFO_HAND.printMessage("Jarvis", String.valueOf(botFinger), String.valueOf(botSum));
       round += 1;
+
+      if (Integer.parseInt(sum) == Integer.parseInt(fingers)+botFinger) { // player sum = player fingers + jarvis fingers
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage("HUMAN_WINS");
+      } else if (botSum == Integer.parseInt(fingers)+botFinger) { // // jarvis sum = player fingers + jarvis fingers
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage("AI_WINS");
+      } else {
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage("DRAW");
+      }
 
   }
 
