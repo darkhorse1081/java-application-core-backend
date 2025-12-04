@@ -12,6 +12,10 @@ public class Hard implements JarvisDifficulty{
   private ArrayList<Integer> playerHandInfo;
   private Integer roundNumber;
 
+  public Hard() {           // constructor for medium difficulty
+      this.roundNumber = 0;
+  }
+
   public void implementStrat() {
 
     if (roundNumber<4) {

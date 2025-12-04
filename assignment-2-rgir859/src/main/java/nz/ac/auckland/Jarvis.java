@@ -3,6 +3,7 @@ package nz.ac.auckland;
 import java.util.ArrayList;
 import nz.ac.auckland.difficulty_levels.DifficultyFactory;
 import nz.ac.auckland.difficulty_levels.JarvisDifficulty;
+import nz.ac.auckland.difficulty_levels.Master;
 import nz.ac.auckland.difficulty_levels.Medium;
 import nz.ac.auckland.difficulty_levels.Hard;
 import nz.ac.auckland.difficulty_levels.strategies.StrategySystem;
@@ -25,12 +26,16 @@ public class Jarvis {
   public void implementProcess() {
 
     JarvisDifficulty selected = DifficultyFactory.selectDifficulty(difficulty); // selected is the difficulty class
-    if (selected instanceof Medium m) {
-      m.transferToMedium(roundNumber, playerHandInfo); // send data to difficulty level medium
+    if (selected instanceof Medium medium) {
+      medium.transferToMedium(roundNumber, playerHandInfo); // send data to difficulty level medium
       selected.implementStrat(); // specialised
     } 
-    if (selected instanceof Hard h) {
-      h.transferToHard(roundNumber, playerHandInfo);
+    if (selected instanceof Hard hard) {
+      hard.transferToHard(roundNumber, playerHandInfo);
+      selected.implementStrat();
+    }
+    if (selected instanceof Master master){
+      master.transferToMaster(roundNumber, playerHandInfo);
       selected.implementStrat();
     }
 
