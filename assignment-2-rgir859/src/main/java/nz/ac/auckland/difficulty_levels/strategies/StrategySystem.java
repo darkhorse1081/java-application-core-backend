@@ -1,6 +1,5 @@
 package nz.ac.auckland.difficulty_levels.strategies;
 
-import java.util.ArrayList;
 
 public class StrategySystem {
 
