@@ -1,7 +1,10 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import nz.ac.auckland.se281.MessageCli;
 
 /**
  * A graph that is composed of a set of verticies and edges.
@@ -11,11 +14,42 @@ import java.util.Set;
  * @param <T> The type of each vertex, that have a total ordering.
  */
 public class Graph<T extends Comparable<T>> {
-  public Graph(Set<T> verticies, Set<Edge<T>> edges) {}
+
+    private Set<T> verticies; // set gives me immutable 'list'
+    private Set<Edge<T>> edges;
+
+  public Graph(Set<T> verticies, Set<Edge<T>> edges) {
+    this.verticies = verticies;
+    this.edges = edges;
+  }
 
   public Set<T> getRoots() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+
+    Set<T> localCopyVertex = new HashSet<>(verticies); // set to check which ones have incoming
+    Set<T> InDegreeCopy = new HashSet<>();
+    Set<T> OutDegreeCopy = new HashSet<>();
+
+    // (incoming to itself) and (incoming from other nodes) and (outgoing to every other node) -> continue
+    // isolated - no outgoing - incoming to itself only by itself
+
+    for (Edge<T> edge : edges) {
+      InDegreeCopy.add(edge.getSource());
+      OutDegreeCopy.add(edge.getDestination());
+    }
+
+
+    for (Edge<T> edge : edges) {
+      if (localCopyVertex.contains(edge.getDestination()) & (edge.getSource() == edge.getDestination())) { // -- 
+        localCopyVertex.remove(edge.getDestination());
+
+      } else if () {
+        
+      } else {
+        continue;
+      }
+    }
+
+    return localCopyVertex;
   }
 
   public boolean isReflexive() {
